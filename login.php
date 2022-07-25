@@ -56,9 +56,6 @@ if (isset($_POST['user_name'],$_POST['password'],$_POST['login'])){
             </div>
             <input name="login" type="submit" class="fadeIn fourth" value="ورود">
         </form>
-
-
-
     </div>
 </div>
 
