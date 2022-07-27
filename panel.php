@@ -5,7 +5,11 @@ auth_require();
 if (isset($_GET['project_id'])) {
     $check_project=chek_project($_GET['project_id']);
     $products = get_products($_GET['project_id']);
+    $flag=0;
 }
+$reports=get_report($user['id']);
+print_r($reports);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -26,7 +30,8 @@ if (isset($_GET['project_id'])) {
     </select>
 </div>
 <div name="projectAndProduct">
-    <div class="dropdown">
+   <?php if (!isset($flag)){ ?>
+    <div class="dropdown" style="text-align: center">
         <br>
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -46,24 +51,27 @@ if (isset($_GET['project_id'])) {
             ?>
         </div>
     </div>
-
+<?php } ?>
     <?php if (isset($_GET['project_id'])&&$check_project) { ?>
-        <div class="dropdown" style="padding-left: 200px;padding-bottom: 150px">
+        <div class="dropdown" style="text-align: center">
             <br>
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                محصول
+                محصولات پروژه ی
+                <?php echo get_project($_GET['project_id'])['name'] ?>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <?php
-                echo "<form method='get' action='_product.php'>";
+                $e=$_GET['project_id'];
+                echo "<form method='get' action='open_the_project.php'>";
                 foreach ($products as $product) {
 
                     $id = $product['id'];
                     $n = $product['name'];
 
                     echo "<button   name='product_id' value='$id'  type='submit' >$n</button><br>";
+
                 }
                 echo "</form>";
                 ?>
@@ -74,6 +82,46 @@ if (isset($_GET['project_id'])) {
         </div>
 
     <?php } ?>
+<h2 style="direction: rtl">جدول فعالیت های روزانه </h2>
+    <table dir="rtl" style="margin-top: 100px;margin-right:25px;margin-left: 25px" class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">پروژه</th>
+            <th scope="col">محصول</th>
+            <th scope="col">فعالیت</th>
+            <th scope="col">زمان عادی</th>
+            <th scope="col">زمان اضافه</th>
+            <th scope="col">تاریخ ثبت</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <?php
+            $reports=get_report($user['id']);
+            foreach ($reports as $id=>$report){
+            ?>
+
+            <td><?php echo $reports[$id]["project"]["name"] ?></td>
+                <td><?php echo $reports[$id]["product"]["name"] ?></td>
+            <td><?php echo $reports[$id]["activity"]["name"] ?></td>
+            <td><?php echo $reports[$id]['hours_normal'].":".$reports[$id]["minutes_normal"] ?></td>
+            <td><?php echo $reports[$id]['hours_extra'].":".$reports[$id]["minutes_extra"] ?></td>
+                <td><?php
+                    $t=$reports[$id]["time"];
+                    echo    date("y/m/d",$t);
+
+
+                    ?></td>
+
+
+        </tr>
+       <?php } ?>
+
+
+        </tbody>
+    </table>
 
 </div>
 

@@ -10,7 +10,7 @@ if (isset($_GET['product_id'])) {
 }
 if ($check_product) {
     $product = get_product($_GET['product_id']);
-    var_dump($product);
+//    var_dump($product);
 }else{
     redirect("panel.php");
 }
