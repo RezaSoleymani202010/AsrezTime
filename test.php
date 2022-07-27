@@ -16,7 +16,14 @@ print_r($reports);
 
 </head>
 <body>
+<div style="padding-left: 80%;padding-top:20px; ">
+    user_active <select class="btn btn-outline-success">
+        <option class="btn btn-outline-success"
+                value="<? $_SESSION['user_id'] ?>"><?php echo $_SESSION['user']['user_name'] ?> </option>
 
+    </select>
+    <a href="logout.php" type="button" class="btn btn-outline-danger">Danger</a>
+</div>
 <div name="table" class="table">
     <table style="text-align: center">
 <thead>

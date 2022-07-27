@@ -44,15 +44,20 @@ if ($_POST) {
 
 </head>
 <body>
+
 <div style="padding-left: 80%;padding-top:20px; ">
-    user_active <select name="cars" id="cars">
-        <option value="<? $_SESSION['user_id'] ?>"><?php echo $user['user_name'] ?> </option>
+    user_active <select class="btn btn-outline-success">
+        <option class="btn btn-outline-success"
+                value="<? $_SESSION['user_id'] ?>"><?php echo $_SESSION['user']['user_name'] ?> </option>
 
     </select>
+    <a href="logout.php" type="button" class="btn btn-outline-danger">خروج </a>
 </div>
+
 <div style="background-color: #acacb6;text-align: center;">
     <?= get_project($project_id)['name'] . "_" . get_product($_GET['product_id'])['name'] ?>
 </div>
+
 <div style="text-align: center">
     <form method="post" action="">
 
@@ -75,6 +80,7 @@ if ($_POST) {
         <input type="submit" name="submit" value="ذخیره"/>
     </form>
 </div>
+
 </body>
 </html>
 
